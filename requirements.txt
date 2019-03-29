@@ -1,0 +1,14 @@
+
+# Linters
+pylint
+pycodestyle
+pydocstyle
+bandit
+mypy
+
+# Test Tools
+pytest
+pytest-cov
+
+# Profiling
+pyinstrument

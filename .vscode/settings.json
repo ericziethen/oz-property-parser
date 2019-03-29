@@ -1,0 +1,25 @@
+{
+    "python.pythonPath": ".venv\\Scripts\\python.exe",
+
+    "editor.tabSize": 4,
+
+    "[python]": {
+        "editor.rulers": [
+            79,
+        ]
+    },
+    "editor.renderWhitespace": "all",
+
+    "python.linting.enabled": true,
+
+    "python.linting.pylintEnabled": true,
+
+    "python.linting.pep8Enabled": true,
+    "python.linting.pep8Path": "pycodestyle",
+
+    "python.linting.pydocstyleEnabled": true,
+
+    "python.linting.banditEnabled": true,
+
+    "python.linting.mypyEnabled": true
+}

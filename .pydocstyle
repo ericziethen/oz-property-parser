@@ -1,0 +1,5 @@
+[pydocstyle]
+inherit=false
+
+add-ignore=D105
+; D105 - Missing docstring in magic method
