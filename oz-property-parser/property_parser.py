@@ -19,7 +19,7 @@ class PropertyData(enum.Enum):
 
     # Disable Enum variable name warning temporarily
     # pylint: disable=invalid-name
-    
+
     # Property Details
     PROPERTY_ID = 'Property ID'
     AREA = 'Area'
@@ -113,7 +113,7 @@ class PropertyFile():
 
     def line_of_interest(self, line):
         """Check if File line is of interest."""
-        return True
+        return line is not None
 
     def parse(self) -> None:
         """Parse the property file."""
@@ -152,8 +152,8 @@ class PropertyFile():
 
 def test():
     """Test Function."""
-    project_logger.setup_logger(R'D:\# Eric Projects\oz-property-parser\#TestFiles\logfile.txt')
-    file_path = R'D:\# Eric Projects\oz-property-parser\#TestFiles\ARCHIVE_SALES_1990.DAT'
+    project_logger.setup_logger(R'..\#TestFiles\logfile.txt')
+    file_path = R'..\#TestFiles\ARCHIVE_SALES_1990.DAT'
 
     logger.info('Creating Test Property File')
     prop_file = PropertyFile(file_path)
@@ -161,10 +161,9 @@ def test():
     prop_file.parse()
     logger.info('Finish Parsing')
 
-    for idx, prop in enumerate(prop_file):
-        #print(F'  Line: {idx2:<5} -> "{prop}"')
+    for prop in prop_file:
         logger.debug(F'{prop}')
-        pass
+
 
 if __name__ == '__main__':
     test()
