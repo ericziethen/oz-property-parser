@@ -113,7 +113,7 @@ class PropertyFile():
 
     def line_of_interest(self, line):
         """Check if File line is of interest."""
-        return line is not None
+        raise NotImplementedError
 
     def parse(self) -> None:
         """Parse the property file."""
