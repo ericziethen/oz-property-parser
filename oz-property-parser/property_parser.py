@@ -2,11 +2,13 @@
 
 """Module to handle Generic Property Log parsing."""
 
+import collections
+import datetime
 import enum
 import logging
 import os
 
-from typing import Dict, List
+from typing import List
 
 import project_logger
 
@@ -55,13 +57,10 @@ class Property():
     def __init__(self, line):
         """Initialize Property Line."""
         self.line = line
-        self._fields: Dict[PropertyData, str] = {}
 
-        # Give each possible field blank values
-        for key in PropertyData:
-            self[key] = ''
+        self._fields = collections.defaultdict(str)
 
-    def parse(self):
+    def parse(self) -> bool:
         """Parse the property line."""
         raise NotImplementedError
 
@@ -148,6 +147,24 @@ class PropertyFile():
 
     def __getitem__(self, idx):
         return self._properties[idx]
+
+
+def convert_date_to_internal(date_str: str, date_format: str):
+    """Convert the given date to the internal format."""
+    return datetime.datetime.strptime(
+        date_str, date_format).strftime('%Y/%M/%d')
+
+
+def convert_time_to_internal(time_str: str, time_format: str):
+    """Convert the given time to the internal format."""
+    return datetime.datetime.strptime(
+        time_str, time_format).time().strftime('%H:%M:%S,%f')[:-3]
+
+
+def split_str(text: str, sep: str):
+    """Split the gives string by the given separator."""
+    split_list = [x.strip() for x in text.split(sep)]
+    return split_list
 
 
 def test():
