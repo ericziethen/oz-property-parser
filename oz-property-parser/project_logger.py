@@ -18,7 +18,7 @@ def setup_logger(log_file_path: str) -> None:
         },
         'handlers': {
             'console': {
-                'level': 'DEBUG',
+                'level': 'INFO',
                 'class': 'logging.StreamHandler',
                 'formatter': 'default'
             },
@@ -27,8 +27,8 @@ def setup_logger(log_file_path: str) -> None:
                 'class': 'logging.handlers.RotatingFileHandler',
                 'formatter': 'default',
                 'filename': log_file_path,
-                'maxBytes': 5242880,
-                'backupCount': 1
+                'maxBytes': 50242880,
+                'backupCount': 10
             }
         },
         'loggers': {
