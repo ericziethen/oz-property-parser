@@ -47,6 +47,8 @@ class PropertyData(enum.Enum):
     NATURE_OF_PROPERTY = 'Nature pof Property'
     PRIMARY_PURPOSE = 'Primary Purpose'
     ZONE_CODE = 'Zone Code'
+    ZONE = 'Zone'
+    ZONE_TYPE = 'Zone Class'
 
     # pylint: enable=invalid-name
 

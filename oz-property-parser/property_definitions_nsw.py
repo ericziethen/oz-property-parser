@@ -3,8 +3,9 @@
 """Module to provide NSW Property Definitions."""
 
 import collections
+import enum
 
-DISTRICT_CODES = collections.defaultdict(str, {
+_DISTRICT_CODES = collections.defaultdict(lambda: 'N/A', {
     '001': 'CESSNOCK',
     '002': 'DUNGOG',
     '003': 'GOSFORD',
@@ -207,13 +208,126 @@ DISTRICT_CODES = collections.defaultdict(str, {
     '911': 'SYDNEY (Former)'
 })
 
+_ZONE_CODES_OLD = collections.defaultdict(lambda: 'N/A', {
+    'A': 'Residential',
+    'B': 'Business',
+    'C': 'Sydney Commercial / Business',
+    'D': '10(a) Sustainable Mixed Use Development',
+    'E': 'Employment',
+    'I': 'Industrial',
+    'M': '9(a)(Mixed Residential / Business)',
+    'N': 'National Parks',
+    'O': 'Open Space',
+    'P': 'Protection',
+    'R': 'Non-Urban',
+    'S': 'Special Uses',
+    'T': 'North Sydney Commercial / Business',
+    'U': 'Community Uses',
+    'V': 'Comprehensive Centre',
+    'W': 'Reserve Open Space',
+    'X': 'Reserved Roads',
+    'Y': 'Reserved Special Uses',
+    'Z': 'Undetermined or Village'
+})
 
 
+@enum.unique
+class ZoneType(enum.Enum):
+
+    # pylint: disable=invalid-name
+    RURAL = 'Rural'
+    RESIDENTIAL = 'Residential'
+    BUSINESS = 'Business'
+    INDUSTRIAL = 'Industrial'
+    SPECIAL_PURPOSE = 'Special Purpose'
+    RECREATION = 'Recreation'
+    ENVIRONMENT_PROTECTION = 'Environment Protection'
+    WATERWAY = 'Waterway'
 
 
+_ZONE_CODES_NEW = collections.defaultdict(lambda: None, {
+    'RU1': ('Primary Production', ZoneType.RURAL),
+    'RU2': ('Rural Landscape', ZoneType.RURAL),
+    'RU3': ('Forestry', ZoneType.RURAL),
+    'RU4': ('Rural Small Holdings', ZoneType.RURAL),
+    'RU5': ('Village', ZoneType.RURAL),
+    'RU6': ('Transition', ZoneType.RURAL),
+
+    'R1': ('General Residential', ZoneType.RESIDENTIAL),
+    'R2': ('Low Density Residential', ZoneType.RESIDENTIAL),
+    'R3': ('Medium Density Residential', ZoneType.RESIDENTIAL),
+    'R4': ('High Density Residential', ZoneType.RESIDENTIAL),
+    'R5': ('Large Lot Residential', ZoneType.RESIDENTIAL),
+
+    'B1': ('Neighbourhood Centre', ZoneType.BUSINESS),
+    'B2': ('Local Centre', ZoneType.BUSINESS),
+    'B3': ('Commercial Core', ZoneType.BUSINESS),
+    'B4': ('Mixed Use', ZoneType.BUSINESS),
+    'B5': ('Business Development', ZoneType.BUSINESS),
+    'B6': ('Enterprise Corridor', ZoneType.BUSINESS),
+    'B7': ('Business Park', ZoneType.BUSINESS),
+
+    'IN1': ('General Industrial', ZoneType.INDUSTRIAL),
+    'IN2': ('Light Industrial', ZoneType.INDUSTRIAL),
+    'IN3': ('Heavy Industrial', ZoneType.INDUSTRIAL),
+    'IN4': ('Working Waterfront', ZoneType.INDUSTRIAL),
+
+    'SP1': ('Special Activities', ZoneType.SPECIAL_PURPOSE),
+    'SP2': ('Infrastructure', ZoneType.SPECIAL_PURPOSE),
+    'SP3': ('Tourist', ZoneType.SPECIAL_PURPOSE),
+
+    'RE1': ('Public Recreation', ZoneType.RECREATION),
+    'RE2': ('Private Recreation', ZoneType.RECREATION),
+
+    'E1': ('National Parks and Nature Reserves', ZoneType.ENVIRONMENT_PROTECTION),
+    'E2': ('Environmental Conservation', ZoneType.ENVIRONMENT_PROTECTION),
+    'E3': ('Environmental Management', ZoneType.ENVIRONMENT_PROTECTION),
+    'E4': ('Environmental Living', ZoneType.ENVIRONMENT_PROTECTION),
+
+    'W1': ('Natural Waterways', ZoneType.WATERWAY),
+    'W2': ('Recreational Waterways', ZoneType.WATERWAY),
+    'W3': ('Working Waterways', ZoneType.WATERWAY)
+})
 
 
+def get_district_from_code(district_code: str):
+    return _DISTRICT_CODES[district_code]
 
 
+def get_zone_from_old_code(zone_code: str):
+    return _ZONE_CODES_OLD[zone_code]
 
 
+def get_zone_from_new_code(zone_code: str):
+    zone_tup = _ZONE_CODES_NEW[zone_code]
+    if zone_tup:
+        return zone_tup[0]
+    else:
+        return ''
+
+
+def get_type_from_new_zone_code(zone_code: str):
+    zone_tup = _ZONE_CODES_NEW[zone_code]
+    if zone_tup:
+        return zone_tup[1].value
+    else:
+        return ''
+
+
+def test_zone_from_old_code(zone_list):
+    for zone_code in zone_list:
+        print(F'    Zone Code: "{zone_code}" -> "{get_zone_from_old_code(zone_code)}"')
+
+
+def test_zone_from_new_code(zone_list):
+    for zone_code in zone_list:
+        print(F'    Zone Code: "{zone_code}" -> Zone: "{get_zone_from_new_code(zone_code)}"')
+        print(F'    Zone Code: "{zone_code}" -> Type: "{get_type_from_new_zone_code(zone_code)}"')
+
+
+def main():
+    test_zone_from_old_code(['A', 'I', 'Z', 'Invalid'])
+    test_zone_from_new_code(['RU1', 'R1', 'IN1', 'Invalid'])
+
+if __name__ == '__main__':
+    main()
