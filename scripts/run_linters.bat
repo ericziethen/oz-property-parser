@@ -13,7 +13,7 @@ IF "%selfWrapped%"=="" (
 )
 
 set SCRIPT_DIR=%~dp0
-set LINTER_DIR=%SCRIPT_DIR%\Linting
+set LINTER_DIR=%SCRIPT_DIR%Linting
 set ERROR_FOUND=
 
 echo ### Start Linting ###
