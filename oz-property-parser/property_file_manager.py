@@ -6,8 +6,9 @@ import os
 
 import property_parser_nsw
 
+
 def get_nsw_property_file_from_path(path: str):
-    """Get the correct nsw property file file object for the given file path."""
+    """Get the correct nsw property file object for the given file path."""
     filename = os.path.basename(path)
     if property_parser_nsw.NswOldPropertyFile.name_allowed(filename):
         return property_parser_nsw.NswOldPropertyFile(path)

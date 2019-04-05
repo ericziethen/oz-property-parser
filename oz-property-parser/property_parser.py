@@ -10,8 +10,6 @@ import os
 
 from typing import List
 
-import project_logger
-
 logger = logging.getLogger(__name__)  # pylint: disable=invalid-name
 
 
@@ -181,23 +179,3 @@ def split_str(text: str, sep: str):
     """Split the gives string by the given separator."""
     split_list = [x.strip() for x in text.split(sep)]
     return split_list
-
-
-
-def test():
-    """Test Function."""
-    project_logger.setup_logger(R'..\#TestFiles\logfile.txt')
-    file_path = R'..\#TestFiles\ARCHIVE_SALES_1990.DAT'
-
-    logger.info('Creating Test Property File')
-    prop_file = PropertyFile(file_path)
-    logger.info('Start Parsing')
-    prop_file.parse()
-    logger.info('Finish Parsing')
-
-    for prop in prop_file:
-        logger.debug(F'{prop}')
-
-
-if __name__ == '__main__':
-    test()

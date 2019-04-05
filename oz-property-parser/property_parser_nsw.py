@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
+"""NSW SPecific Property Parsing."""
+
 import logging
-import os
 
 import property_parser
 import property_definitions_nsw as nsw_def
@@ -14,7 +15,6 @@ class NswOldProperty(property_parser.Property):
 
     def parse(self) -> bool:
         """Parse the property line."""
-
         fields = property_parser.split_str(self.line, ';')
 
         district = nsw_def.get_district_from_code(fields[1])
@@ -68,7 +68,6 @@ class NswNewProperty(property_parser.Property):
 
     def parse(self) -> bool:
         """Parse the property line."""
-
         fields = property_parser.split_str(self.line, ';')
 
         district = nsw_def.get_district_from_code(fields[1])
