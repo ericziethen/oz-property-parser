@@ -1,0 +1,24 @@
+#!/usr/bin/env python3
+
+import pytest
+
+import property_file_manager
+import property_parser_nsw
+
+################################
+# Module Function Tests
+################################
+PROPERTY_FILE_CLASS_IDENTIFIED = [
+    ('004_SALES_DATA_NNME_15012018.DAT', property_parser_nsw.NswNewPropertyFile),
+    ('ARCHIVE_SALES_1990.DAT', property_parser_nsw.NswOldPropertyFile),
+    ('INVALID', None)
+]
+@pytest.mark.parametrize('file_name, property_class', PROPERTY_FILE_CLASS_IDENTIFIED)
+def test_get_nsw_property_file_from_path(file_name, property_class):
+    result = property_file_manager.get_nsw_property_file_from_path(file_name)
+
+    if property_class is None:
+        assert result is None
+    else:
+        assert result is not None
+        assert isinstance(result, property_class)

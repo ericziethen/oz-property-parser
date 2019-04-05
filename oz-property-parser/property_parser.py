@@ -66,6 +66,10 @@ class Property():
         """Parse the property line."""
         raise NotImplementedError
 
+    def get_field_dic(self):
+        """Get a list of all the fields as dictionaries."""
+        return self._fields
+
     def __setitem__(self, key: PropertyData, value):
         self._fields[self.__keytransform__(key)] = value
 
@@ -132,6 +136,16 @@ class PropertyFile():
                     else:
                         raise ValueError(F'Failed Parsing Line: "{line}"')
 
+    def get_lines_as_list(self):
+        """Get a list of all the properties."""
+        data_list = []
+
+        # Prepare the result
+        for property_file in self:
+            data_list.append(property_file.get_field_dic())
+
+        return data_list
+
     def __iter__(self):
         self._idx = 0
         return self
@@ -167,6 +181,7 @@ def split_str(text: str, sep: str):
     """Split the gives string by the given separator."""
     split_list = [x.strip() for x in text.split(sep)]
     return split_list
+
 
 
 def test():

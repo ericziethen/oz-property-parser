@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import logging
+import os
 
 import property_parser
 import property_definitions_nsw as nsw_def
@@ -121,81 +122,3 @@ class NswNewPropertyFile(property_parser.PropertyFile):
     def line_of_interest(self, line):
         """Check if File line is of interest."""
         return line.upper().startswith('B')
-
-
-def test_old_property():
-    """Test Old Property Format."""
-    file_path = R'#TestFiles\ARCHIVE_SALES_1990.DAT'
-
-    logger.info('Creating Test Property File')
-    prop_file = NswOldPropertyFile(file_path)
-    logger.info('Start Parsing')
-    prop_file.parse()
-    logger.info('Finish Parsing')
-
-    for prop in prop_file:
-        #logger.debug(F'{prop}')
-        # logger.debug(F'{prop}')
-
-        '''
-        prop_line = F'{prop[property_parser.PropertyData.UNIT_NUMBER]}@@@\
-            {prop[property_parser.PropertyData.HOUSE_NUMBER]}@@@\
-            {prop[property_parser.PropertyData.STREET_NAME]}@@@\
-            {prop[property_parser.PropertyData.SUBBURB]}@@@\
-            {prop[property_parser.PropertyData.POST_CODE]}@@@'
-
-        '''
-        
-        prop_line =\
-            prop[property_parser.PropertyData.PROPERTY_ID] + ',' +\
-            prop[property_parser.PropertyData.UNIT_NUMBER] + ',' +\
-            prop[property_parser.PropertyData.HOUSE_NUMBER] + ',' +\
-            prop[property_parser.PropertyData.STREET_NAME] + ',' +\
-            prop[property_parser.PropertyData.SUBBURB] + ',' +\
-            prop[property_parser.PropertyData.POST_CODE]
-        print(prop_line)
-
-
-def test_new_property():
-    """Test New Property Format."""
-    file_path = R'#TestFiles\090_SALES_DATA_NNME_04022019.DAT'
-
-    logger.info('Creating Test Property File')
-    prop_file = NswNewPropertyFile(file_path)
-    logger.info('Start Parsing')
-    prop_file.parse()
-    logger.info('Finish Parsing')
-
-    for prop in prop_file:
-        #logger.debug(F'{prop}')
-        # logger.debug(F'{prop}')
-
-        '''
-        prop_line = F'{prop[property_parser.PropertyData.UNIT_NUMBER]}@@@\
-            {prop[property_parser.PropertyData.HOUSE_NUMBER]}@@@\
-            {prop[property_parser.PropertyData.STREET_NAME]}@@@\
-            {prop[property_parser.PropertyData.SUBBURB]}@@@\
-            {prop[property_parser.PropertyData.POST_CODE]}@@@'
-
-        '''
-        
-        prop_line =\
-            prop[property_parser.PropertyData.PROPERTY_ID] + ',' +\
-            prop[property_parser.PropertyData.UNIT_NUMBER] + ',' +\
-            prop[property_parser.PropertyData.HOUSE_NUMBER] + ',' +\
-            prop[property_parser.PropertyData.STREET_NAME] + ',' +\
-            prop[property_parser.PropertyData.SUBBURB] + ',' +\
-            prop[property_parser.PropertyData.POST_CODE]
-        print(prop_line)
-
-
-def test():
-    """Test function for this module."""
-    import project_logger
-    project_logger.setup_logger(R'#TestFiles\logfile.txt')
-
-    test_new_property()
-
-
-if __name__ == '__main__':
-    test()

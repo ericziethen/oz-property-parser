@@ -147,8 +147,3 @@ NEW_FILE_LINE_NOT_OF_INTEREST = [
 def test_nsw_new_property_file_line_of_interest(line):
     prop = property_parser_nsw.NswNewPropertyFile(R'file/path')
     assert not prop.line_of_interest(line)
-
-
-################################
-# Module Function Tests
-################################
