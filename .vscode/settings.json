@@ -1,5 +1,8 @@
 {
     "python.pythonPath": ".venv\\Scripts\\python.exe",
+    "python.autoComplete.extraPaths": [
+        "${workspaceFolder}\\oz_property_parser"
+    ],
 
     "editor.tabSize": 4,
 
