@@ -33,8 +33,7 @@ def validate_args(args: argparse.Namespace) -> None:
 def get_csv_keys() -> List[str]:
     """Create a list of csv keys."""
     key_list = []
-    ignore_keys = [
-    ]
+    ignore_keys: List[property_parser.PropertyData] = []
 
     for field in property_parser.PropertyData:
         if field not in ignore_keys:
@@ -66,7 +65,7 @@ def write_property_to_csv(csv_path: str,
         dict_writer.writerows(csv_data)
 
 
-def parse_path(path: str):
+def parse_path(path: str) -> None:
     """Parse the path for Property files."""
     logger.info(F'Parse Property files in "{path}"')
 
@@ -74,9 +73,12 @@ def parse_path(path: str):
         for filename in files:
             file_path = os.path.join(root, filename)
             logger.info(F'Checking file "{file_path}"')
-            property_file = prop_mgr.get_nsw_property_file_from_path(file_path)
 
-            if property_file is not None:
+            try:
+                property_file = prop_mgr.get_property_file_from_path(file_path)
+            except ValueError as error:
+                logger.info(F'Failed to Identify Property File: {error}')
+            else:
                 logger.info('Parse Log File')
                 property_file.parse()
 
@@ -85,11 +87,9 @@ def parse_path(path: str):
 
                 write_property_to_csv(csv_path, property_file)
                 logger.info('Parsing complete')
-            else:
-                logger.info('Dont parse, can\'t identify valid Property file.')
 
 
-def main():
+def main() -> None:
     """Run the log parser."""
     # Parse command line arguments
     args = parse_args()

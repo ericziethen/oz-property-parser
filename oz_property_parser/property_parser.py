@@ -8,7 +8,7 @@ import enum
 import logging
 import os
 
-from typing import List
+from typing import Dict, List
 
 logger = logging.getLogger(__name__)  # pylint: disable=invalid-name
 
@@ -54,24 +54,24 @@ class PropertyData(enum.Enum):
 class Property():
     """Property Line base class."""
 
-    def __init__(self, line):
+    def __init__(self, line: str) -> None:
         """Initialize Property Line."""
         self.line = line
 
-        self._fields = collections.defaultdict(str)
+        self._fields: Dict[PropertyData, str] = collections.defaultdict(str)
 
     def parse(self) -> bool:
         """Parse the property line."""
         raise NotImplementedError
 
-    def get_field_dic(self):
+    def get_field_dic(self) -> Dict[PropertyData, str]:
         """Get a list of all the fields as dictionaries."""
         return self._fields
 
-    def __setitem__(self, key: PropertyData, value):
+    def __setitem__(self, key: PropertyData, value: str) -> None:
         self._fields[self.__keytransform__(key)] = value
 
-    def __getitem__(self, key: PropertyData):
+    def __getitem__(self, key: PropertyData) -> str:
         return self._fields[self.__keytransform__(key)]
 
     def __iter__(self):
@@ -114,7 +114,7 @@ class PropertyFile():
         """Create a property object for this class."""
         raise NotImplementedError
 
-    def line_of_interest(self, line):
+    def line_of_interest(self, line: str) -> bool:
         """Check if File line is of interest."""
         raise NotImplementedError
 
@@ -134,7 +134,7 @@ class PropertyFile():
                     else:
                         raise ValueError(F'Failed Parsing Line: "{line}"')
 
-    def get_lines_as_list(self):
+    def get_lines_as_list(self) -> List[Dict[str, str]]:
         """Get a list of all the properties."""
         data_list = []
 
@@ -163,19 +163,19 @@ class PropertyFile():
         return self._properties[idx]
 
 
-def convert_date_to_internal(date_str: str, date_format: str):
+def convert_date_to_internal(date_str: str, date_format: str) -> str:
     """Convert the given date to the internal format."""
     return datetime.datetime.strptime(
         date_str, date_format).strftime('%Y/%M/%d')
 
 
-def convert_time_to_internal(time_str: str, time_format: str):
+def convert_time_to_internal(time_str: str, time_format: str) -> str:
     """Convert the given time to the internal format."""
     return datetime.datetime.strptime(
         time_str, time_format).time().strftime('%H:%M:%S,%f')[:-3]
 
 
-def split_str(text: str, sep: str):
+def split_str(text: str, sep: str) -> List[str]:
     """Split the gives string by the given separator."""
     split_list = [x.strip() for x in text.split(sep)]
     return split_list

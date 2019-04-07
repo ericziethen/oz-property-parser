@@ -292,17 +292,17 @@ _ZONE_CODES_NEW = collections.defaultdict(lambda: None, {
 })
 
 
-def get_district_from_code(district_code: str):
+def get_district_from_code(district_code: str) -> str:
     """Get the District from the given District code."""
     return _DISTRICT_CODES[district_code]
 
 
-def get_zone_from_old_code(zone_code: str):
+def get_zone_from_old_code(zone_code: str) -> str:
     """Get the Zone from the Old Zone code."""
     return _ZONE_CODES_OLD[zone_code]
 
 
-def get_zone_from_new_code(zone_code: str):
+def get_zone_from_new_code(zone_code: str) -> str:
     """Get the Zone from the New Zone code."""
     zone_tup = _ZONE_CODES_NEW[zone_code]
     if zone_tup:
@@ -311,7 +311,7 @@ def get_zone_from_new_code(zone_code: str):
         return ''
 
 
-def get_type_from_new_zone_code(zone_code: str):
+def get_type_from_new_zone_code(zone_code: str) -> str:
     """Get the Zone Type from the New Zone code."""
     zone_tup = _ZONE_CODES_NEW[zone_code]
     if zone_tup:
