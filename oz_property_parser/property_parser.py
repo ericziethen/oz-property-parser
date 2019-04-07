@@ -20,6 +20,8 @@ class PropertyData(enum.Enum):
     # Disable Enum variable name warning temporarily
     # pylint: disable=invalid-name
 
+    FILE_NAME = 'File Name'
+
     # Property Details
     PROPERTY_ID = 'Property ID'
     AREA = 'Area'
@@ -130,6 +132,7 @@ class PropertyFile():
                     # single line makes parsing a lot simpler for now
                     prop = self.create_property_from_line(line)
                     if prop.parse():
+                        prop[PropertyData.FILE_NAME] = self._file_name
                         self._properties.append(prop)
                     else:
                         raise ValueError(F'Failed Parsing Line: "{line}"')
