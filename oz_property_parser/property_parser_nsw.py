@@ -27,8 +27,11 @@ class NswOldProperty(property_parser.Property):
         self[property_parser.PropertyData.SUBBURB] = fields[8]
         self[property_parser.PropertyData.POST_CODE] = fields[9]
 
-        to_date = property_parser.convert_date_to_internal(
-            fields[10], '%d/%M/%Y')
+        if fields[10]:
+            to_date = property_parser.convert_date_to_internal(
+                fields[10], '%d/%M/%Y')
+        else:
+            to_date = 'N/A'
         self[property_parser.PropertyData.CONTRACT_DATE] = to_date
 
         self[property_parser.PropertyData.PURCHASE_PRICE] = fields[11]
@@ -81,12 +84,18 @@ class NswNewProperty(property_parser.Property):
         self[property_parser.PropertyData.AREA] = fields[11]
         self[property_parser.PropertyData.AREA_TYPE] = fields[12]
 
-        to_date = property_parser.convert_date_to_internal(
-            fields[13], '%Y%M%d')
+        if fields[13]:
+            to_date = property_parser.convert_date_to_internal(
+                fields[13], '%Y%M%d')
+        else:
+            to_date = 'N/A'
         self[property_parser.PropertyData.CONTRACT_DATE] = to_date
-
-        to_date = property_parser.convert_date_to_internal(
-            fields[14], '%Y%M%d')
+        
+        if fields[14]:
+            to_date = property_parser.convert_date_to_internal(
+                fields[14], '%Y%M%d')
+        else:
+            to_date = 'N/A'
         self[property_parser.PropertyData.SETTLEMENT_DATE] = to_date
 
         self[property_parser.PropertyData.PURCHASE_PRICE] = fields[15]
