@@ -15,7 +15,7 @@ set PROJ_MAIN_DIR=%~dp0..
 
 pushd %PROJ_MAIN_DIR%
 
-set PACKAGE_ROOT=oz-property-parser
+set PACKAGE_ROOT=oz_property_parser
 
 set PYTHONPATH=%PYTHONPATH%;%PACKAGE_ROOT%
 

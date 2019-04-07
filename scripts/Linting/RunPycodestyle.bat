@@ -4,7 +4,7 @@ setlocal
 
 set BATCH_DIR=%~dp0
 set PROJ_MAIN_DIR=%~dp0..\..
-set MODULE_PATH=%PROJ_MAIN_DIR%\oz-property-parser
+set MODULE_PATH=%PROJ_MAIN_DIR%\oz_property_parser
 
 pycodestyle "%MODULE_PATH%"
 set return_code=%errorlevel%
