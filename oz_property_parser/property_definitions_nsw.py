@@ -233,6 +233,7 @@ _ZONE_CODES_OLD = collections.defaultdict(lambda: 'N/A', {
 
 @enum.unique
 class ZoneType(enum.Enum):
+    """Enum for the different NSW Zone Types."""
 
     # pylint: disable=invalid-name
     RURAL = 'Rural'
@@ -279,7 +280,8 @@ _ZONE_CODES_NEW = collections.defaultdict(lambda: None, {
     'RE1': ('Public Recreation', ZoneType.RECREATION),
     'RE2': ('Private Recreation', ZoneType.RECREATION),
 
-    'E1': ('National Parks and Nature Reserves', ZoneType.ENVIRONMENT_PROTECTION),
+    'E1': ('National Parks and Nature Reserves',
+           ZoneType.ENVIRONMENT_PROTECTION),
     'E2': ('Environmental Conservation', ZoneType.ENVIRONMENT_PROTECTION),
     'E3': ('Environmental Management', ZoneType.ENVIRONMENT_PROTECTION),
     'E4': ('Environmental Living', ZoneType.ENVIRONMENT_PROTECTION),
@@ -291,14 +293,17 @@ _ZONE_CODES_NEW = collections.defaultdict(lambda: None, {
 
 
 def get_district_from_code(district_code: str):
+    """Get the District from the given District code."""
     return _DISTRICT_CODES[district_code]
 
 
 def get_zone_from_old_code(zone_code: str):
+    """Get the Zone from the Old Zone code."""
     return _ZONE_CODES_OLD[zone_code]
 
 
 def get_zone_from_new_code(zone_code: str):
+    """Get the Zone from the New Zone code."""
     zone_tup = _ZONE_CODES_NEW[zone_code]
     if zone_tup:
         return zone_tup[0]
@@ -307,27 +312,9 @@ def get_zone_from_new_code(zone_code: str):
 
 
 def get_type_from_new_zone_code(zone_code: str):
+    """Get the Zone Type from the New Zone code."""
     zone_tup = _ZONE_CODES_NEW[zone_code]
     if zone_tup:
         return zone_tup[1].value
     else:
         return ''
-
-
-def test_zone_from_old_code(zone_list):
-    for zone_code in zone_list:
-        print(F'    Zone Code: "{zone_code}" -> "{get_zone_from_old_code(zone_code)}"')
-
-
-def test_zone_from_new_code(zone_list):
-    for zone_code in zone_list:
-        print(F'    Zone Code: "{zone_code}" -> Zone: "{get_zone_from_new_code(zone_code)}"')
-        print(F'    Zone Code: "{zone_code}" -> Type: "{get_type_from_new_zone_code(zone_code)}"')
-
-
-def main():
-    test_zone_from_old_code(['A', 'I', 'Z', 'Invalid'])
-    test_zone_from_new_code(['RU1', 'R1', 'IN1', 'Invalid'])
-
-if __name__ == '__main__':
-    main()
