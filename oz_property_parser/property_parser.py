@@ -8,7 +8,7 @@ import enum
 import logging
 import os
 
-from typing import Dict, List
+from typing import Dict, List, Iterator
 
 logger = logging.getLogger(__name__)  # pylint: disable=invalid-name
 
@@ -61,19 +61,19 @@ class Property():
         """Initialize Property Line."""
         self.line = line
 
-        self._fields: Dict[PropertyData, str] = collections.defaultdict(str)
+        self._fields: Dict[str, str] = collections.defaultdict(str)
 
     def parse(self) -> bool:
         """Parse the property line."""
         raise NotImplementedError
 
-    def get_field_dic(self) -> Dict[PropertyData, str]:
+    def get_field_dic(self) -> Dict[str, str]:
         """Get a list of all the fields as dictionaries."""
         return self._fields
 
     @staticmethod
-    def _keytransform(key: PropertyData):
-        return key.value
+    def _keytransform(key: PropertyData) -> str:
+        return str(key.value)
 
     def __setitem__(self, key: PropertyData, value: str) -> None:
         self._fields[self._keytransform(key)] = value
@@ -81,7 +81,7 @@ class Property():
     def __getitem__(self, key: PropertyData) -> str:
         return self._fields[self._keytransform(key)]
 
-    def __iter__(self):
+    def __iter__(self) -> Iterator[str]:
         return iter(self._fields)
 
     def __len__(self) -> int:
@@ -150,7 +150,7 @@ class PropertyFile():
 
         return data_list
 
-    def __iter__(self):
+    def __iter__(self) -> Iterator[Property]:
         self._idx = 0
         return self
 
