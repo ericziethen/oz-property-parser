@@ -61,7 +61,7 @@ class NswOldPropertyFile(property_parser.PropertyFile):
         return (file_name_candidate.upper().startswith('ARCHIVE_SALES_') and
                 file_name_candidate.upper().endswith('.DAT'))
 
-    def line_of_interest(self, line):
+    def line_of_interest(self, line: str) -> bool:
         """Check if File line is of interest."""
         return line.upper().startswith('B')
 
@@ -90,7 +90,7 @@ class NswNewProperty(property_parser.Property):
         else:
             to_date = 'N/A'
         self[property_parser.PropertyData.CONTRACT_DATE] = to_date
-        
+
         if fields[14]:
             to_date = property_parser.convert_date_to_internal(
                 fields[14], '%Y%M%d')
@@ -127,6 +127,6 @@ class NswNewPropertyFile(property_parser.PropertyFile):
         return ('_SALES_DATA_NNME_' in file_name_candidate.upper() and
                 file_name_candidate.upper().endswith('.DAT'))
 
-    def line_of_interest(self, line):
+    def line_of_interest(self, line: str) -> bool:
         """Check if File line is of interest."""
         return line.upper().startswith('B')

@@ -80,16 +80,16 @@ class Property():
     def __iter__(self):
         return iter(self._fields)
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self._fields)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return str(self._fields)
 
     def __keytransform__(self, key: PropertyData):
         return key.value
 
-    def __delitem__(self, key: PropertyData):
+    def __delitem__(self, key: PropertyData) -> None:
         del self._fields[self.__keytransform__(key)]
 
 
@@ -153,7 +153,7 @@ class PropertyFile():
         self._idx = 0
         return self
 
-    def __next__(self):
+    def __next__(self) -> Property:
         try:
             item = self._properties[self._idx]
         except IndexError:
@@ -161,10 +161,10 @@ class PropertyFile():
         self._idx += 1
         return item
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self._properties)
 
-    def __getitem__(self, idx):
+    def __getitem__(self, idx: int) -> Property:
         return self._properties[idx]
 
 

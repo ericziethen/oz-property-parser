@@ -328,4 +328,4 @@ def get_type_from_new_zone_code(zone_code: str) -> str:
     except KeyError:
         return ''
     else:
-        return zone_tup[1].value
+        return str(zone_tup[1].value)
