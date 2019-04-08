@@ -21,9 +21,9 @@ def test_get_property_file_from_path(file_name, property_class):
 
 
 PROPERTY_FILE_CLASS_NOT_IDENTIFIED = [
-    ('INVALID', None)
+    ('INVALID')
 ]
-@pytest.mark.parametrize('file_name, property_class', PROPERTY_FILE_CLASS_NOT_IDENTIFIED)
-def test_get_property_file_from_path(file_name, property_class):
+@pytest.mark.parametrize('file_name', PROPERTY_FILE_CLASS_NOT_IDENTIFIED)
+def test_get_property_file_from_path(file_name):
     with pytest.raises(ValueError):
-        result = property_file_manager.get_property_file_from_path(file_name)
+        property_file_manager.get_property_file_from_path(file_name)
