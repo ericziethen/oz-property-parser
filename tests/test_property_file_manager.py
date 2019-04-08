@@ -10,15 +10,20 @@ import property_parser_nsw
 ################################
 PROPERTY_FILE_CLASS_IDENTIFIED = [
     ('004_SALES_DATA_NNME_15012018.DAT', property_parser_nsw.NswNewPropertyFile),
-    ('ARCHIVE_SALES_1990.DAT', property_parser_nsw.NswOldPropertyFile),
-    ('INVALID', None)
+    ('ARCHIVE_SALES_1990.DAT', property_parser_nsw.NswOldPropertyFile)
 ]
 @pytest.mark.parametrize('file_name, property_class', PROPERTY_FILE_CLASS_IDENTIFIED)
-def test_get_nsw_property_file_from_path(file_name, property_class):
-    result = property_file_manager.get_nsw_property_file_from_path(file_name)
+def test_get_property_file_from_path(file_name, property_class):
+    result = property_file_manager.get_property_file_from_path(file_name)
 
-    if property_class is None:
-        assert result is None
-    else:
-        assert result is not None
-        assert isinstance(result, property_class)
+    assert result is not None
+    assert isinstance(result, property_class)
+
+
+PROPERTY_FILE_CLASS_NOT_IDENTIFIED = [
+    ('INVALID', None)
+]
+@pytest.mark.parametrize('file_name, property_class', PROPERTY_FILE_CLASS_NOT_IDENTIFIED)
+def test_get_property_file_from_path(file_name, property_class):
+    with pytest.raises(ValueError):
+        result = property_file_manager.get_property_file_from_path(file_name)
