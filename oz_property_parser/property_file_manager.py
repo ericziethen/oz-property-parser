@@ -13,7 +13,7 @@ def get_property_file_from_path(path: str) -> property_parser.PropertyFile:
     filename = os.path.basename(path)
     if property_parser_nsw.NswOldPropertyFile.name_allowed(filename):
         return property_parser_nsw.NswOldPropertyFile(path)
-    elif property_parser_nsw.NswNewPropertyFile.name_allowed(filename):
+    if property_parser_nsw.NswNewPropertyFile.name_allowed(filename):
         return property_parser_nsw.NswNewPropertyFile(path)
 
     raise ValueError(F'{path} is not a Valid NSW Property File')

@@ -71,11 +71,15 @@ class Property():
         """Get a list of all the fields as dictionaries."""
         return self._fields
 
+    @staticmethod
+    def _keytransform(key: PropertyData):
+        return key.value
+
     def __setitem__(self, key: PropertyData, value: str) -> None:
-        self._fields[self.__keytransform__(key)] = value
+        self._fields[self._keytransform(key)] = value
 
     def __getitem__(self, key: PropertyData) -> str:
-        return self._fields[self.__keytransform__(key)]
+        return self._fields[self._keytransform(key)]
 
     def __iter__(self):
         return iter(self._fields)
@@ -86,11 +90,8 @@ class Property():
     def __str__(self) -> str:
         return str(self._fields)
 
-    def __keytransform__(self, key: PropertyData):
-        return key.value
-
     def __delitem__(self, key: PropertyData) -> None:
-        del self._fields[self.__keytransform__(key)]
+        del self._fields[self._keytransform(key)]
 
 
 class PropertyFile():
