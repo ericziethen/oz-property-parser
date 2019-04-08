@@ -21,6 +21,7 @@ class PropertyData(enum.Enum):
     # pylint: disable=invalid-name
 
     FILE_NAME = 'File Name'
+    LINE_NO = 'Line No'
 
     # Property Details
     PROPERTY_ID = 'Property ID'
@@ -123,7 +124,7 @@ class PropertyFile():
     def parse(self) -> None:
         """Parse the property file."""
         with open(self._file_path, 'r', encoding=self._encoding) as prop_file:
-            for raw_line in prop_file:
+            for idx, raw_line in enumerate(prop_file, start=1):
                 line = raw_line.strip()
                 if self.line_of_interest(line):
                     # For now let's assume we only need a single line for each
@@ -133,6 +134,7 @@ class PropertyFile():
                     prop = self.create_property_from_line(line)
                     if prop.parse():
                         prop[PropertyData.FILE_NAME] = self._file_name
+                        prop[PropertyData.LINE_NO] = idx
                         self._properties.append(prop)
                     else:
                         raise ValueError(F'Failed Parsing Line: "{line}"')
