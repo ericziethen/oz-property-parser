@@ -134,7 +134,7 @@ class PropertyFile():
                     prop = self.create_property_from_line(line)
                     if prop.parse():
                         prop[PropertyData.FILE_NAME] = self._file_name
-                        prop[PropertyData.LINE_NO] = idx
+                        prop[PropertyData.LINE_NO] = str(idx)
                         self._properties.append(prop)
                     else:
                         raise ValueError(F'Failed Parsing Line: "{line}"')
