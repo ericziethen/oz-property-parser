@@ -235,8 +235,8 @@ ZONE_CODES_OLD = [
     ('INVALID_CODE', 'N/A')
 ]
 @pytest.mark.parametrize('zone_code, expected_zone', ZONE_CODES_OLD)
-def get_zone_from_old_code(zone_code, expected_zone):
-    assert property_definitions_nsw.get_zone_from_old_code(zone_code) == expected_district
+def test_get_zone_from_old_code(zone_code, expected_zone):
+    assert property_definitions_nsw.get_zone_from_old_code(zone_code) == expected_zone
 
 
 ZONE_CODES_NEW = [
@@ -277,8 +277,8 @@ ZONE_CODES_NEW = [
     ('INVALID_CODE', 'N/A')
 ]
 @pytest.mark.parametrize('zone_code, expected_zone', ZONE_CODES_NEW)
-def get_zone_from_old_code(zone_code, expected_zone):
-    assert property_definitions_nsw.get_zone_from_new_code(zone_code) == expected_district
+def test_get_zone_from_old_code(zone_code, expected_zone):
+    assert property_definitions_nsw.get_zone_from_new_code(zone_code) == expected_zone
 
 
 ZONE_TYPE_NEW = [
@@ -317,7 +317,7 @@ ZONE_TYPE_NEW = [
     ('W2', property_definitions_nsw.ZoneType.WATERWAY),
     ('W3', property_definitions_nsw.ZoneType.WATERWAY),
 ]
-@pytest.mark.parametrize('zone_code, expected_zone_type', ZONE_CODES_NEW)
-def get_zone_from_old_code(zone_code, expected_zone_type):
-    assert property_definitions_nsw.get_zone_from_new_code(zone_code) == expected_district
+@pytest.mark.parametrize('zone_code, expected_zone_type', ZONE_TYPE_NEW)
+def test_get_zone_from_old_code(zone_code, expected_zone_type):
+    assert property_definitions_nsw.get_type_from_new_zone_code(zone_code) == expected_zone_type.value
 

@@ -2,10 +2,9 @@
 
 """Module to provide NSW Property Definitions."""
 
-import collections
 import enum
 
-_DISTRICT_CODES = collections.defaultdict(lambda: 'N/A', {
+_DISTRICT_CODES = {
     '001': 'CESSNOCK',
     '002': 'DUNGOG',
     '003': 'GOSFORD',
@@ -206,9 +205,9 @@ _DISTRICT_CODES = collections.defaultdict(lambda: 'N/A', {
     '903': 'UNINCORPORATED SYDNEY',
     '905': 'SYDNEY (Former)',
     '911': 'SYDNEY (Former)'
-})
+}
 
-_ZONE_CODES_OLD = collections.defaultdict(lambda: 'N/A', {
+_ZONE_CODES_OLD = {
     'A': 'Residential',
     'B': 'Business',
     'C': 'Sydney Commercial / Business',
@@ -228,7 +227,7 @@ _ZONE_CODES_OLD = collections.defaultdict(lambda: 'N/A', {
     'X': 'Reserved Roads',
     'Y': 'Reserved Special Uses',
     'Z': 'Undetermined or Village'
-})
+}
 
 
 @enum.unique
@@ -246,7 +245,7 @@ class ZoneType(enum.Enum):
     WATERWAY = 'Waterway'
 
 
-_ZONE_CODES_NEW = collections.defaultdict(lambda: None, {
+_ZONE_CODES_NEW = {
     'RU1': ('Primary Production', ZoneType.RURAL),
     'RU2': ('Rural Landscape', ZoneType.RURAL),
     'RU3': ('Forestry', ZoneType.RURAL),
@@ -289,32 +288,44 @@ _ZONE_CODES_NEW = collections.defaultdict(lambda: None, {
     'W1': ('Natural Waterways', ZoneType.WATERWAY),
     'W2': ('Recreational Waterways', ZoneType.WATERWAY),
     'W3': ('Working Waterways', ZoneType.WATERWAY)
-})
+}
 
 
 def get_district_from_code(district_code: str) -> str:
     """Get the District from the given District code."""
-    return _DISTRICT_CODES[district_code]
+    try:
+        district = _DISTRICT_CODES[district_code]
+    except KeyError:
+        return 'N/A'
+    else:
+        return district
 
 
 def get_zone_from_old_code(zone_code: str) -> str:
     """Get the Zone from the Old Zone code."""
-    return _ZONE_CODES_OLD[zone_code]
+    try:
+        zone = _ZONE_CODES_OLD[zone_code]
+    except KeyError:
+        return 'N/A'
+    else:
+        return zone
 
 
 def get_zone_from_new_code(zone_code: str) -> str:
     """Get the Zone from the New Zone code."""
-    zone_tup = _ZONE_CODES_NEW[zone_code]
-    if zone_tup:
-        return zone_tup[0]
-    else:
+    try:
+        zone_tup = _ZONE_CODES_NEW[zone_code]
+    except KeyError:
         return ''
+    else:
+        return zone_tup[0]
 
 
 def get_type_from_new_zone_code(zone_code: str) -> str:
     """Get the Zone Type from the New Zone code."""
-    zone_tup = _ZONE_CODES_NEW[zone_code]
-    if zone_tup:
-        return zone_tup[1].value
-    else:
+    try:
+        zone_tup = _ZONE_CODES_NEW[zone_code]
+    except KeyError:
         return ''
+    else:
+        return zone_tup[1].value
