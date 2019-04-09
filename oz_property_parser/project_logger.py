@@ -23,7 +23,7 @@ def setup_logger(log_file_path: str) -> None:
                 'formatter': 'default'
             },
             'file': {
-                'level': 'DEBUG',
+                'level': 'INFO',
                 'class': 'logging.handlers.RotatingFileHandler',
                 'formatter': 'default',
                 'filename': log_file_path,

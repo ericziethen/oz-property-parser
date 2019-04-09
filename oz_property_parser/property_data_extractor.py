@@ -6,9 +6,11 @@ import argparse
 import csv
 import logging
 import os
+import shutil
 
 from typing import List
 
+import archive_mgr
 import property_file_manager as prop_mgr
 import property_parser
 import project_logger
@@ -59,34 +61,56 @@ def write_property_to_csv(csv_path: str,
                                      extrasaction='ignore',
                                      fieldnames=get_csv_keys())
         if write_header:
-            logger.info(F'Writing Header Row')
+            logger.debug(F'Writing Header Row')
             dict_writer.writeheader()
-        logger.info(F'Writing {len(csv_data)} entries')
+        logger.debug(F'Writing {len(csv_data)} entries')
         dict_writer.writerows(csv_data)
 
 
-def parse_path(path: str) -> None:
+def parse_path(path: str, csv_path: str) -> None:
     """Parse the path for Property files."""
     logger.info(F'Parse Property files in "{path}"')
 
     for root, _, files in os.walk(path):
         for filename in files:
             file_path = os.path.join(root, filename)
-            logger.info(F'Checking file "{file_path}"')
+            logger.info(F'Process "{file_path}"')
 
-            try:
-                property_file = prop_mgr.get_property_file_from_path(file_path)
-            except ValueError as error:
-                logger.info(F'Failed to Identify Property File: {error}')
+            # Check file for extraction
+            if archive_mgr.file_is_archive(file_path):
+                dest_dir = os.path.join(root, 'EXTRACT_' + filename)
+                logger.info(F'Extracting "{file_path}" to "{dest_dir}"')
+                try:
+                    archive_mgr.extract(file_path, dest_dir)
+                except archive_mgr.ExtractionError as error:
+                    logger.exception('Extraction Error: "{error}"')
+                else:
+                    # Check the Extracted folder for Files as well
+                    parse_path(dest_dir, csv_path)
+
+                    # Delete the created folder again
+                    logger.debug(F'Deleting Extration directory "{dest_dir}"')
+                    try:
+                        shutil.rmtree(dest_dir)
+                    except OSError as error:
+                        logger.exception(
+                            F'Deletion Failed to delete "{dest_dir}", Error: "{error}"')
+                    else:
+                        logger.debug('Deletion Succeeded')
+
             else:
-                logger.info('Parse Log File')
-                property_file.parse()
+                # Process the file as property file
+                try:
+                    property_file = prop_mgr.get_property_file_from_path(
+                        file_path)
+                except ValueError as error:
+                    logger.error(F'Failed to Identify Property File: {error}')
+                else:
+                    logger.info('Parse Log File')
+                    property_file.parse()
 
-                csv_path = os.path.join(
-                    path, F'ParseResult_Properties.csv')
-
-                write_property_to_csv(csv_path, property_file)
-                logger.info('Parsing complete')
+                    write_property_to_csv(csv_path, property_file)
+                    logger.info('Parsing complete')
 
 
 def main() -> None:
@@ -102,7 +126,7 @@ def main() -> None:
     logger.info(F'Command Line Arguments: "{args}"')
 
     # Process Log Dir
-    parse_path(args.dir)
+    parse_path(args.dir, os.path.join(args.dir, F'ParseResult_Properties.csv'))
 
 
 if __name__ == '__main__':
