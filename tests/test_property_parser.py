@@ -4,6 +4,13 @@ import pytest
 
 import property_parser
 
+################################
+# Tests for Enum PropertyData
+################################
+def test_ensure_enum_correct():
+    for field in property_parser.PropertyData:
+        assert isinstance(field.value, str)
+        assert ' ' not in field.value
 
 ################################
 # Tests for Class Property

@@ -19,8 +19,8 @@ set datetimef=%Yr%.%Mon%.%Day%_%Hr%-%Min%-%Sec%
 
 rem !!! CONFIGURE SOURCE ROOT HERE !!!
 set SOURCE_ROOT=%PROJ_MAIN_DIR%\oz_property_parser
-set PYTHON_PROG=%SOURCE_ROOT%\property_parser_nsw.py
-set ARGS=
+set PYTHON_PROG=%SOURCE_ROOT%\property_data_extractor.py
+set ARGS="C:\# Eric\# Personal Development\###ERIC_TEMP###\oz-property-parser\#TestFiles"
 set PROFILE_DIR=%PROJ_MAIN_DIR%\profiling
 if not exist "%PROFILE_DIR%" mkdir "%PROFILE_DIR%"
 set PROFILE_LOG=%PROFILE_DIR%\profile_%datetimef%.txt

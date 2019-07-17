@@ -293,39 +293,51 @@ _ZONE_CODES_NEW = {
 
 def get_district_from_code(district_code: str) -> str:
     """Get the District from the given District code."""
-    try:
-        district = _DISTRICT_CODES[district_code]
-    except KeyError:
-        return 'N/A'
+    if district_code:
+        try:
+            district = _DISTRICT_CODES[district_code]
+        except KeyError:
+            return '# No Mapping'
+        else:
+            return district
     else:
-        return district
+        return ''
 
 
 def get_zone_from_old_code(zone_code: str) -> str:
     """Get the Zone from the Old Zone code."""
-    try:
-        zone = _ZONE_CODES_OLD[zone_code]
-    except KeyError:
-        return 'N/A'
+    if zone_code:
+        try:
+            zone = _ZONE_CODES_OLD[zone_code]
+        except KeyError:
+            return '# No Mapping'
+        else:
+            return zone
     else:
-        return zone
+        return ''
 
 
 def get_zone_from_new_code(zone_code: str) -> str:
     """Get the Zone from the New Zone code."""
-    try:
-        zone_tup = _ZONE_CODES_NEW[zone_code]
-    except KeyError:
-        return ''
+    if zone_code:
+        try:
+            zone_tup = _ZONE_CODES_NEW[zone_code]
+        except KeyError:
+            return '# No Mapping'
+        else:
+            return zone_tup[0]
     else:
-        return zone_tup[0]
+        return ''
 
 
 def get_type_from_new_zone_code(zone_code: str) -> str:
     """Get the Zone Type from the New Zone code."""
-    try:
-        zone_tup = _ZONE_CODES_NEW[zone_code]
-    except KeyError:
-        return ''
+    if zone_code:
+        try:
+            zone_tup = _ZONE_CODES_NEW[zone_code]
+        except KeyError:
+            return '# No Mapping'
+        else:
+            return str(zone_tup[1].value)
     else:
-        return str(zone_tup[1].value)
+        return ''

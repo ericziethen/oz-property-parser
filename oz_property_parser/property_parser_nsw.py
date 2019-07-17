@@ -17,8 +17,10 @@ class NswOldProperty(property_parser.Property):
         """Parse the property line."""
         fields = property_parser.split_str(self.line, ';')
 
-        district = nsw_def.get_district_from_code(fields[1])
-        self[property_parser.PropertyData.DISTRICT_CODE] = district
+        district_code = fields[1]
+        self[property_parser.PropertyData.DISTRICT_CODE] = district_code
+        self[property_parser.PropertyData.DISTRICT] =\
+            nsw_def.get_district_from_code(district_code)
 
         self[property_parser.PropertyData.PROPERTY_ID] = fields[4]
         self[property_parser.PropertyData.UNIT_NUMBER] = fields[5]
@@ -73,8 +75,11 @@ class NswNewProperty(property_parser.Property):
         """Parse the property line."""
         fields = property_parser.split_str(self.line, ';')
 
-        district = nsw_def.get_district_from_code(fields[1])
-        self[property_parser.PropertyData.DISTRICT_CODE] = district
+        district_code = fields[1]
+        self[property_parser.PropertyData.DISTRICT_CODE] = district_code
+        self[property_parser.PropertyData.DISTRICT] =\
+            nsw_def.get_district_from_code(district_code)
+
         self[property_parser.PropertyData.PROPERTY_ID] = fields[2]
         self[property_parser.PropertyData.UNIT_NUMBER] = fields[6]
         self[property_parser.PropertyData.HOUSE_NUMBER] = fields[7]

@@ -15,13 +15,14 @@ IF "%selfWrapped%"=="" (
 set SCRIPT_DIR=%~dp0
 set LINTER_DIR=%SCRIPT_DIR%Linting
 set ERROR_FOUND=
+set ERROR_LIST=
 
 echo ### Start Linting ###
-call:run_linter "%LINTER_DIR%\RunBandit.bat"
-call:run_linter "%LINTER_DIR%\RunMyPy.bat"
-call:run_linter "%LINTER_DIR%\RunPycodestyle.bat"
-call:run_linter "%LINTER_DIR%\RunPydocstyle.bat"
-call:run_linter "%LINTER_DIR%\RunPylint.bat"
+call:run_linter "Bandit"        "%LINTER_DIR%\RunBandit.bat"
+call:run_linter "MyPy"          "%LINTER_DIR%\RunMyPy.bat"
+call:run_linter "Pycodestyle"   "%LINTER_DIR%\RunPycodestyle.bat"
+call:run_linter "Pydocstyle"    "%LINTER_DIR%\RunPydocstyle.bat"
+call:run_linter "Pylint"        "%LINTER_DIR%\RunPylint.bat"
 echo ### Linting finished ###
 
 if defined ERROR_FOUND (
@@ -35,19 +36,21 @@ if defined ERROR_FOUND (
 : ##### START OF FUNCTION DEFINITIONS #####
 : #########################################
 :run_linter
-set LINDER_SCRIPT=%~1
+set LINTER_NAME=%~1
+set LINTER_SCRIPT=%~2
 
-echo ### LINTER START - '%LINDER_SCRIPT%' ###
-call "%LINDER_SCRIPT%"
+echo ### LINTER START - '%LINTER_SCRIPT%' ###
+call "%LINTER_SCRIPT%"
 
 set return_code=%errorlevel%
 if %return_code% gtr 0 (
     set ERROR_FOUND=TRUE
+    set ERROR_LIST=%ERROR_LIST% %LINTER_NAME%
     echo   Issues Found
 ) else (
     echo   No Issues
 )
-echo ### LINTER END - '%LINDER_SCRIPT%' ###
+echo ### LINTER END - '%LINTER_SCRIPT%' ###
 echo[
 goto:eof
 : #######################################
@@ -56,7 +59,12 @@ goto:eof
 
 
 :error
-echo !!! SOME LINTING ISSUE FOUND, CHECK OUTPUT
+echo !!! CHECK OUTPUT, SOME LINTING ISSUE FOUND WITH
+for %%a in (%ERROR_LIST%) do (
+   echo   - %%a
+)
+
+
 popd
 endlocal
 exit 1

@@ -20,36 +20,37 @@ class PropertyData(enum.Enum):
     # Disable Enum variable name warning temporarily
     # pylint: disable=invalid-name
 
-    FILE_NAME = 'File Name'
-    LINE_NO = 'Line No'
+    FILE_NAME = 'File_Name'
+    LINE_NO = 'Line_No'
 
     # Property Details
-    PROPERTY_ID = 'Property ID'
+    PROPERTY_ID = 'Property_ID'
     AREA = 'Area'
-    AREA_TYPE = 'Area Type'
+    AREA_TYPE = 'Area_Type'
     DIMENSIONS = 'Dimensions'
-    LAND_DESCRIPTIONS = 'Land Descriptions'
-    LOT_NUMBER = 'Lot Number'
+    LAND_DESCRIPTIONS = 'Land_Descriptions'
+    LOT_NUMBER = 'Lot_Number'
 
     # Address Details
-    DISTRICT_CODE = 'DIstrict Code'
-    UNIT_NUMBER = 'Unit Number'
-    HOUSE_NUMBER = 'House Number'
-    STREET_NAME = 'Street Name'
+    DISTRICT_CODE = 'District_Code'
+    DISTRICT = 'District'
+    UNIT_NUMBER = 'Unit_Number'
+    HOUSE_NUMBER = 'House_Number'
+    STREET_NAME = 'Street_Name'
     SUBBURB = 'Subburb'
-    POST_CODE = 'Post Code'
+    POST_CODE = 'Post_Code'
 
     # Sales Details
-    CONTRACT_DATE = 'Contract Date'
-    SETTLEMENT_DATE = ' Settlement Date'
-    PURCHASE_PRICE = 'Purchase Price'
+    CONTRACT_DATE = 'Contract_Date'
+    SETTLEMENT_DATE = 'Settlement_Date'
+    PURCHASE_PRICE = 'Purchase_Price'
 
     # Misc
-    NATURE_OF_PROPERTY = 'Nature pof Property'
-    PRIMARY_PURPOSE = 'Primary Purpose'
-    ZONE_CODE = 'Zone Code'
+    NATURE_OF_PROPERTY = 'Nature_of_Property'
+    PRIMARY_PURPOSE = 'Primary_Purpose'
+    ZONE_CODE = 'Zone_Code'
     ZONE = 'Zone'
-    ZONE_TYPE = 'Zone Class'
+    ZONE_TYPE = 'Zone_Class'
 
     # pylint: enable=invalid-name
 

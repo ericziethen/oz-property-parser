@@ -5,6 +5,8 @@ import pytest
 import property_definitions_nsw
 
 DISTRICT_CODES = [
+    ('', ''),
+    ('INVALID_CODE', '# No Mapping'),
     ('001', 'CESSNOCK'),
     ('002', 'DUNGOG'),
     ('003', 'GOSFORD'),
@@ -204,8 +206,7 @@ DISTRICT_CODES = [
     ('902', 'UNINCORPORATED AREA'),
     ('903', 'UNINCORPORATED SYDNEY'),
     ('905', 'SYDNEY (Former)'),
-    ('911', 'SYDNEY (Former)'),
-    ('INVALID_CODE', 'N/A')
+    ('911', 'SYDNEY (Former)')
 ]
 @pytest.mark.parametrize('district_code, expected_district', DISTRICT_CODES)
 def test_get_district_from_code(district_code, expected_district):
@@ -213,6 +214,8 @@ def test_get_district_from_code(district_code, expected_district):
 
 
 ZONE_CODES_OLD = [
+    ('', ''),
+    ('INVALID_CODE', '# No Mapping'),
     ('A', 'Residential'),
     ('B', 'Business'),
     ('C', 'Sydney Commercial / Business'),
@@ -231,8 +234,7 @@ ZONE_CODES_OLD = [
     ('W', 'Reserve Open Space'),
     ('X', 'Reserved Roads'),
     ('Y', 'Reserved Special Uses'),
-    ('Z', 'Undetermined or Village'),
-    ('INVALID_CODE', 'N/A')
+    ('Z', 'Undetermined or Village')
 ]
 @pytest.mark.parametrize('zone_code, expected_zone', ZONE_CODES_OLD)
 def test_get_zone_from_old_code(zone_code, expected_zone):
@@ -240,6 +242,8 @@ def test_get_zone_from_old_code(zone_code, expected_zone):
 
 
 ZONE_CODES_NEW = [
+    ('', ''),
+    ('INVALID_CODE', '# No Mapping'),
     ('RU1', 'Primary Production'),
     ('RU2', 'Rural Landscape'),
     ('RU3', 'Forestry'),
@@ -273,8 +277,7 @@ ZONE_CODES_NEW = [
     ('E4', 'Environmental Living'),
     ('W1', 'Natural Waterways'),
     ('W2', 'Recreational Waterways'),
-    ('W3', 'Working Waterways'),
-    ('INVALID_CODE', 'N/A')
+    ('W3', 'Working Waterways')
 ]
 @pytest.mark.parametrize('zone_code, expected_zone', ZONE_CODES_NEW)
 def test_get_zone_from_old_code(zone_code, expected_zone):
@@ -315,9 +318,17 @@ ZONE_TYPE_NEW = [
     ('E4', property_definitions_nsw.ZoneType.ENVIRONMENT_PROTECTION),
     ('W1', property_definitions_nsw.ZoneType.WATERWAY),
     ('W2', property_definitions_nsw.ZoneType.WATERWAY),
-    ('W3', property_definitions_nsw.ZoneType.WATERWAY),
+    ('W3', property_definitions_nsw.ZoneType.WATERWAY)
 ]
 @pytest.mark.parametrize('zone_code, expected_zone_type', ZONE_TYPE_NEW)
-def test_get_zone_from_old_code(zone_code, expected_zone_type):
+def test_get_type_from_new_zone_code(zone_code, expected_zone_type):
     assert property_definitions_nsw.get_type_from_new_zone_code(zone_code) == expected_zone_type.value
 
+
+ZONE_TYPE_NEW_FAILED = [
+    ('', ''),
+    ('INVALID_CODE', '# No Mapping')
+]
+@pytest.mark.parametrize('zone_code, expected_zone_type', ZONE_TYPE_NEW_FAILED)
+def test_get_type_from_new_zone_code_failed(zone_code, expected_zone_type):
+    assert property_definitions_nsw.get_type_from_new_zone_code(zone_code) == expected_zone_type
