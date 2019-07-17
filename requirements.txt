@@ -1,14 +1,2 @@
-
-# Linters
-pylint
-pycodestyle
-pydocstyle
-bandit
-mypy
-
-# Test Tools
-pytest
-pytest-cov
-
-# Profiling
-pyinstrument
+-r Requirements/requirements-dev-for-release.txt
+-r Requirements/requirements-dev-local.txt
